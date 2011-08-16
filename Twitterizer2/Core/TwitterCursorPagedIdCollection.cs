@@ -68,7 +68,7 @@ namespace Twitterizer
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        internal static TwitterCursorPagedIdCollection DeserializeWrapper(JObject value)
+        internal static TwitterCursorPagedIdCollection DeserializeWrapper(JContainer value)
         {
             if (value == null || value.SelectToken("users") == null)
                 return null;

@@ -71,20 +71,26 @@ namespace Twitterizer
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        internal static UserIdCollection DeserializeWrapper(JObject value)
+        internal static UserIdCollection DeserializeWrapper(JToken value)
         {
-            if (value == null || value.SelectToken("ids") == null)
+            if (value == null || (value is JObject && value.SelectToken("ids") == null))
                 return null;
 
-            decimal[] parsedIds = JsonConvert.DeserializeObject<decimal[]>(value.SelectToken("ids").ToString());
+            decimal[] parsedIds;
+            UserIdCollection result = new UserIdCollection();
+            
+            if (value is JArray)
+            {
+                parsedIds = JsonConvert.DeserializeObject<decimal[]>(value.ToString());
+            }
+            else
+            {
+                parsedIds = JsonConvert.DeserializeObject<decimal[]>(value.SelectToken("ids").ToString());
 
-            UserIdCollection result = new UserIdCollection
-                                                      {
-                                                          NextCursor = value.SelectToken("next_cursor").Value<long>(),
-                                                          PreviousCursor =
-                                                              value.SelectToken("previous_cursor").Value<long>()
-                                                      };
-
+                result.NextCursor = value.SelectToken("next_cursor").Value<long>();
+                result.PreviousCursor = value.SelectToken("previous_cursor").Value<long>();
+            }
+            
             foreach (decimal t in parsedIds)
             {
                 result.Add(t);

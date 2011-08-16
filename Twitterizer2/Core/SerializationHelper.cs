@@ -52,7 +52,7 @@ namespace Twitterizer.Core
         /// <param name="value">Contains nested dictionary objects containing deserialized values for manual parsing.</param>
         /// <returns>A strongly typed object representing the deserialized data of type <typeparamref name="T" />
         /// </returns>
-        public delegate T DeserializationHandler(JObject value);
+        public delegate T DeserializationHandler(JContainer value);
 
         /// <summary>
         /// Deserializes the specified web response.
@@ -78,7 +78,7 @@ namespace Twitterizer.Core
             }
             else
             {
-                resultObject = deserializationHandler((JObject)JsonConvert.DeserializeObject(Encoding.UTF8.GetString(webResponseData, 0, webResponseData.Length)));
+                resultObject = deserializationHandler((JContainer)JsonConvert.DeserializeObject(Encoding.UTF8.GetString(webResponseData, 0, webResponseData.Length)));
             }
 
             return resultObject;

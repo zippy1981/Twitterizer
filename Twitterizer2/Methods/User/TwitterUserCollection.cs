@@ -73,7 +73,7 @@ namespace Twitterizer
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        internal static TwitterUserCollection DeserializeWrapper(JObject value)
+        internal static TwitterUserCollection DeserializeWrapper(JToken value)
         {
             if (value == null || value.SelectToken("users") == null)
                 return null;

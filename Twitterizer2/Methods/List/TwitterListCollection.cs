@@ -70,7 +70,7 @@ namespace Twitterizer
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        internal static TwitterListCollection Deserialize(JObject value)
+        internal static TwitterListCollection Deserialize(JContainer value)
         {
             if (value == null || value.First == null || value.First.First == null)
                 return null;

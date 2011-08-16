@@ -53,7 +53,7 @@ namespace Twitterizer
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        internal static TwitterSearchResultCollection Deserialize(JObject value)
+        internal static TwitterSearchResultCollection Deserialize(JContainer value)
         {
             if (value == null || value["results"] == null)
                 return null;
