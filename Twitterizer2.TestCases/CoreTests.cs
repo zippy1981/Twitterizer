@@ -48,6 +48,8 @@
                 // Get the parameter-less constructor, if there is one
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
 
+                Assert.IsNotNull(constructor, "{0} does not have a default public constructor", type.FullName);
+
                 // Instantiate the type by invoking the constructor
                 object objectToSerialize = constructor.Invoke(null);
 
