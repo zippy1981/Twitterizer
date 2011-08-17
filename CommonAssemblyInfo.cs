@@ -31,6 +31,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -64,3 +65,6 @@ using System.Security;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
+
+// So we can access internal members
+[assembly: InternalsVisibleTo("Twitterizer2.TestCases, PublicKey=002400000480000094000000060200000024000052534131000400000100010079c1a714f40be003924a46f92120e980b455f20931b370689fb98c04a8606ddb42e3a8193deff1d664e05781f56232072848aa999fa1ee915367f558c2773a385b2714ad0e1e9eac7dfad6539dab16fc30e6d22c2a09dd73db48fe3352a4a832327e1289fe22a26790b381b607b925562007e452a4c3ba7534fe17c311d0cfeb")]
