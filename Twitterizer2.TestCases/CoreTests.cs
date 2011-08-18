@@ -17,7 +17,14 @@
         {
             Assembly twitterizerAssembly = Assembly.GetAssembly(typeof(TwitterUser));
             var objectTypesToCheck = from t in twitterizerAssembly.GetExportedTypes()
-                               where !t.IsAbstract &&
+                               where
+                               // TwitterIdCollection was never serializable
+                               t != typeof(TwitterIdCollection) &&
+                               // TwitterCursorPagedIdCollection was never serializable
+                               t != typeof(TwitterCursorPagedIdCollection) &&
+                               // UserIdCollection was never serializable
+                               t != typeof(UserIdCollection) &&
+                               !t.IsAbstract &&
                                !t.IsInterface &&
                                (
                                 t.GetInterfaces().Contains(twitterizerAssembly.GetType("Twitterizer.Core.ITwitterObject")) ||
@@ -25,20 +32,7 @@
                                )
                                select t;
 
-            var commandTypesToCheck = from t in twitterizerAssembly.GetTypes()
-                                      where
-                                     //!t.IsAbstract &&
-                                     //!t.IsInterface &&
-                                     (
-                                      t.GetInterfaces().Contains(twitterizerAssembly.GetType("Twitterizer.Core.ICommand`1")) ||
-                                      t.GetInterfaces().Contains(twitterizerAssembly.GetType("Twitterizer.Core.TwitterCommand`1")) ||
-                                      t.IsSubclassOf(twitterizerAssembly.GetType("Twitterizer.Commands.PagedTimelineCommand`1")) ||
-                                      t.IsSubclassOf(twitterizerAssembly.GetType("Twitterizer.Core.PagedCommand`1")) ||
-                                      t.IsSubclassOf(twitterizerAssembly.GetType("Twitterizer.Core.CursorPagedCommand`1"))
-                                     )
-                                     select t;
-
-            foreach (Type type in objectTypesToCheck.Union(commandTypesToCheck))
+            foreach (Type type in objectTypesToCheck)
             {
                 Console.WriteLine(string.Format("Inspecting: {0}", type.FullName));
 
