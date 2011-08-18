@@ -35,7 +35,7 @@ namespace Twitterizer2.TestCases
         [Test]
         public static void WebRequestBuilderParts()
         {
-            WebRequestBuilder builder = new WebRequestBuilder(new Uri("http://example.com/endpoint"), HTTPVerb.GET)
+            WebRequestBuilder builder = new WebRequestBuilder(new Uri("http://example.com/endpoint"), HTTPVerb.GET, false, null)
                                             {
                                                 Tokens = new OAuthTokens()
                                                              {
