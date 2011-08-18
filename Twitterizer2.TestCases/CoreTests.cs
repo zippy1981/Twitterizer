@@ -45,10 +45,16 @@
                 // Check that the object itself is marked as serializable
                 Assert.That(type.IsSerializable, string.Format("{0} is not marked as Serializable", type.Name));
 
-                // Get the parameter-less constructor, if there is one
+                // Get the parameter-less public constructor, if there is one
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
 
-                Assert.IsNotNull(constructor, "{0} does not have a default public constructor", type.FullName);
+                if (constructor == null)
+                {
+                    Console.WriteLine("{0} does not have a default public constructor", type.FullName);
+                    constructor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null);
+                    Assert.IsNotNull(constructor, "{0} does not have a default constructor", type.FullName);
+                }
+                
 
                 // Instantiate the type by invoking the constructor
                 object objectToSerialize = constructor.Invoke(null);
